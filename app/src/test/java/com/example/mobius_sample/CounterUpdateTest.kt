@@ -8,17 +8,30 @@ import org.junit.Test
 
 class CounterUpdateTest {
 
+    private val updateSpec = UpdateSpec(CounterUpdate())
+    private val defaultModel = CounterModel.default()
+
     @Test
     fun `whenever increment is clicked, then increment the value`() {
-        val updateSpec = UpdateSpec(CounterUpdate())
-        val defaultModel = CounterModel.default()
-
         updateSpec
             .given(defaultModel)
             .whenEvent(Increment)
             .then(
                 assertThatNext(
                     hasModel(defaultModel.increment()),
+                    hasNoEffects()
+                )
+            )
+    }
+
+    @Test
+    fun `whenever decrement is clicked, then decrement the value`() {
+        updateSpec
+            .given(defaultModel)
+            .whenEvent(Decrement)
+            .then(
+                assertThatNext(
+                    hasModel(defaultModel.decrement()),
                     hasNoEffects()
                 )
             )

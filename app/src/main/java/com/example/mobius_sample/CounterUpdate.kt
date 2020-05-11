@@ -6,6 +6,9 @@ import com.spotify.mobius.Update
 
 class CounterUpdate : Update<CounterModel, CounterEvent, Nothing> {
     override fun update(model: CounterModel, event: CounterEvent): Next<CounterModel, Nothing> {
-        return next(model.increment())
+        return when(event) {
+            Increment -> next(model.increment())
+            Decrement -> next(model.decrement())
+        }
     }
 }
